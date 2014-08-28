@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DOTFILES_DIR=$(pwd)/files
-DEST_DIR=~
+DOTFILES_DIR=$(dirname $(readlink -f $0))/files
+DEST_DIR=$HOME
 
 function isSamePath() {
   [[ "$(readlink -f $1)" == "$(readlink -f $2)" ]];

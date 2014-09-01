@@ -23,6 +23,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'klen/python-mode'
+NeoBundle 'vim-scripts/taglist.vim'
 
 " Required:
 call neobundle#end()
@@ -78,9 +79,8 @@ set hlsearch
 " c ... Continue search at the end of a match, not the next character
 " e ... Automatically put <CR> when executing a register
 " s ... Set buffer options when the buffer is entered for the first time
-" $ ... Display a $ at the end of a line about to change instead of
 " displaying the line itself
-set cpoptions=ces$
+set cpoptions=ces
 
 " Always display status line
 set laststatus=2
@@ -95,13 +95,14 @@ set history=200
 " Set status line
 set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\/%L,\ col:\ %c%V\ (%P)%)
 
-colorscheme github
+" gentooish looks good in terminals
+colorscheme gentooish
 
 " Hotkeys
 let mapleader = ","
 
-map <F6> <plug>TlistToggle<CR>
-map <F7> <plug>NERDTreeTabsToggle<CR>
+nnoremap <silent> <F8> :TlistToggle<CR>
+nnoremap <silent> <F7> :NERDTreeTabsToggle<CR>
 
 command! DiffOrig let g:diffline = line('.') | vert new | set bt=nofile | r # | 0d_ | diffthis | :exe "norm! ".g:diffline."G" | wincmd p | diffthis | wincmd p
 nnoremap <leader>do :DiffOrig<cr>
@@ -119,3 +120,4 @@ noremap <Right> <NOP>
 
 " TagList options
 let Tlist_WinWidth = 50
+let Tlist_Inc_Winwidth = 0

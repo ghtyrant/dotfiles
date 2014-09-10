@@ -1,0 +1,151 @@
+!!#!# .Xdefaults [plain_text]
+
+xclock*faceName: Bitstream Vera Sans Mono:pixelsize=80
+
+*antialias: true
+*hinting: true
+*hintstyle: hintfull
+
+!xterm settings
+*background: #111111
+*foreground: #babdb6
+xterm*dynamicColors:    true
+xterm*utf8:             2
+xterm*eightBitInput:    true
+xterm*scrollTtyKeypress:true
+xterm*scrollTtyOutput:  false
+xterm*scrollBar:        false
+xterm*loginShell:       true
+xterm*faceName:         Bitstream Vera Sans Mono:pixelsize=12
+xterm*jumpScroll:       true
+xterm*multiScroll:      true
+xterm*toolBar:          false
+xterm*perl-ext-common:  default,matcher,clipboard
+!xterm*background: rgb:14/14/14
+xterm*charClass: 33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:38
+xterm*trimSelection: true
+!xterm*font:         xft:Bitstream Vera Sans Mono:pixelsize=12
+xterm*background: rgb:05/05/05
+xterm*foreground: rgb:DD/DD/DD
+xterm*geometry: 80x25
+xterm*matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@!#-]*[\\w/-]
+xterm*urlLauncher: /usr/bin/firefox
+xterm*matcher: 1
+xterm*matcher.button: 1
+
+XTerm.VT100.translations: #override \
+Super <Key> minus: smaller-vt-font() \n\
+Super <Key> plus: larger-vt-font() \n
+
+!!#--------------------
+!!# URxvt Settings
+!!#--------------------
+URxvt*reverseVideo: false
+URxvt*title: Terminal
+URxvt*perl-ext-common: default,matcher
+URxvt*matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@!#-]*[\\w/-]
+URxvt*font:         xft:Bitstream Vera Sans Mono:pixelsize=12,antialias=true,hinting=true
+URxvt*background: rgb:05/05/05
+URxvt*foreground: rgb:DD/DD/DD
+URxvt*url-launcher: /usr/bin/firefox
+URxvt*colorUL: #4682B4
+URxvt*matcher: 1
+URxvt*matcher.button: 1
+URxvt*geometry: 80x25
+URxvt*scrollTtyOutput: false
+URxvt*scrollTtyKeypress: true
+URxvt*buffered: true
+URxvt*dynamicColors:    true
+URxvt*shading: 10
+URxvt*iconFile: /usr/share/icons/gnome/32x32/apps/gnome-terminal.png
+!!#URxvt*depth: 32
+!!#URxvt*background: rgba:0000/0000/0000/cccc
+!!#!URxvt*dpi: 88
+URxvt*transparent:true
+!!#URxvt*tintColor: #000000
+!
+
+aterm*title: Terminal
+aterm*perl-ext-common: default,matcher,clipboard
+aterm*matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@!#-]*[\\w/-]
+aterm*font:-*-bitstream vera sans mono-medium-*-*-*-20-*-*-*-*-*-*-*
+aterm*boldFont:-*-bitstream vera sans mono-medium-*-*-*-20-*-*-*-*-*-*-*
+aterm*background: rgb:00/00/00
+aterm*foreground: rgb:DD/DD/DD
+aterm*urlLauncher: /usr/bin/firefox
+aterm*matcher: 1
+aterm*transparent:false
+
+
+!!#--------------------
+!!# Overall Settings
+!!#--------------------
+*utf8: 1
+*faceSize: 8
+*jumpScroll: true
+*multiScroll: true
+*boldMode: true
+*scrollBar: false
+*cutNewline: false
+*scrollTtyOutput: false
+*scrollKey: true
+*cursorBlink: true
+*dynamicColors: true
+*saveLines: 3000
+*geometry: 125x45
+
+!!#--------------------
+!!# Colors
+!!#--------------------
+
+*cursorColor: #707678
+*highlightColor:#444
+
+!!# Black
+*color0: #2c2d2e
+
+!!# DarkRed
+*color1: #ae4747
+
+!!# DarkGreen
+*color2: #9FBC00
+
+!!# DarkYellow
+*color3: #c7c93d
+
+!!# DarkBlue
+*color4: #204a87
+
+!!# DarkMagenta
+*color5: #aa8cbf
+
+!!# DarkCyan
+*color6: #9DC7F1
+
+!!# LightGray
+*color7: #707678
+
+!!# DarkGray
+*color8: #a3a5a6
+
+!!# Red
+*color9: #b24242
+
+!!# Green
+*color10: #9FBC00
+
+!!# Yellow
+*color11: #d0c54d
+
+!!# Blue
+*color12: #325e80
+
+!!# Magenta
+*color13: #418bc4
+
+!!# Cyan
+*color14: #74d2e3
+
+!!# White
+*color15: #e2e2e2
+

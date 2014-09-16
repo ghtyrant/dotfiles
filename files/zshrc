@@ -4382,6 +4382,11 @@ zrclocal
 
 ## }}}
 
+VIRTUALENVWRAPPER_SOURCE="/usr/bin/virtualenvwrapper_lazy.sh"
+if [ -x $VIRTUALENVWRAPPER_SOURCE ]; then
+    source $VIRTUALENVWRAPPER_SOURCE
+fi
+
 ## END OF FILE #################################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
 # Local variables:

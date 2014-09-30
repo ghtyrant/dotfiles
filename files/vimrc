@@ -96,6 +96,9 @@ set history=200
 " Set status line
 set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\/%L,\ col:\ %c%V\ (%P)%)
 
+" Open files without folding anything
+set foldlevelstart=20
+
 " gentooish looks good in terminals
 colorscheme gentooish
 
@@ -130,3 +133,5 @@ let Tlist_Use_Right_Window = 1
 "setlocal makeprg=pdflatex\ \-file\-line\-error\ \-interaction=nonstopmode\ $*
 setlocal errorformat=%f:%l:\ %m
 map <buffer> <F3> :w<CR>:make<CR>
+
+let g:pymode_rope = 0

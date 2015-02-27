@@ -6,6 +6,18 @@ if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
+""""" Hotkeys
+let mapleader = ","
+
+nnoremap <silent> <F8> :TlistToggle<CR>
+nnoremap <silent> <F7> :NERDTreeTabsToggle<CR>
+
+command! DiffOrig let g:diffline = line('.') | vert new | set bt=nofile | r # | 0d_ | diffthis | :exe "norm! ".g:diffline."G" | wincmd p | diffthis | wincmd p
+nnoremap <leader>do :DiffOrig<cr>
+nnoremap <leader>dc :q<cr>:diffoff<cr>:exe "norm! ".g:diffline."G"<cr>
+
+
+""""" Plugins
 " Required:
 call neobundle#begin(expand('~/.vim/bundle'))
 
@@ -25,6 +37,7 @@ NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'klen/python-mode'
 NeoBundle 'vim-scripts/taglist.vim'
 NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
+NeoBundle 'airblade/vim-gitgutter'
 
 " Required:
 call neobundle#end()
@@ -101,16 +114,6 @@ set foldlevelstart=20
 
 " gentooish looks good in terminals
 colorscheme gentooish
-
-""""" Hotkeys
-let mapleader = ","
-
-nnoremap <silent> <F8> :TlistToggle<CR>
-nnoremap <silent> <F7> :NERDTreeTabsToggle<CR>
-
-command! DiffOrig let g:diffline = line('.') | vert new | set bt=nofile | r # | 0d_ | diffthis | :exe "norm! ".g:diffline."G" | wincmd p | diffthis | wincmd p
-nnoremap <leader>do :DiffOrig<cr>
-nnoremap <leader>dc :q<cr>:diffoff<cr>:exe "norm! ".g:diffline."G"<cr>
 
 """"" pymode settings
 let g:pymode_rope_lookup_project = 0

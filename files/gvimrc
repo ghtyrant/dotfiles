@@ -1,6 +1,6 @@
 set guifont=Source\ Code\ Pro\ Medium\ 10
 set guioptions=-M
-set guioptions+=a
+set guioptions+=ai
 
 colorscheme github
 

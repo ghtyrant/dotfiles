@@ -3,3 +3,6 @@ set guioptions=-M
 set guioptions+=a
 
 colorscheme github
+
+" vim-airline
+let g:airline_powerline_fonts = 1

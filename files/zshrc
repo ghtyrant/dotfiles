@@ -4387,6 +4387,15 @@ if [ -x $VIRTUALENVWRAPPER_SOURCE ]; then
     source $VIRTUALENVWRAPPER_SOURCE
 fi
 
+NPM_PACKAGES="${HOME}/.npm-packages"
+NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+
+PATH="$NPM_PACKAGES/bin:$PATH"
+unset MANPATH
+MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
+
+
 ## END OF FILE #################################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
 # Local variables:

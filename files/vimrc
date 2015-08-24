@@ -14,16 +14,17 @@ call neobundle#begin(expand('~/.vim/bundle'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " My Bundles here:
-"NeoBundle 'bling/vim-airline'
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'bling/vim-airline'
 NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'klen/python-mode'
 NeoBundle 'vim-scripts/taglist.vim'
+NeoBundle 'wting/rust.vim'
+NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'tpope/vim-sleuth'
 
 " Required:
 call neobundle#end()
@@ -108,9 +109,36 @@ command! DiffOrig let g:diffline = line('.') | vert new | set bt=nofile | r # | 
 nnoremap <leader>do :DiffOrig<cr>
 nnoremap <leader>dc :q<cr>:diffoff<cr>:exe "norm! ".g:diffline."G"<cr>
 
+" Buffer shortcuts
+nmap <leader>bl :bn<cr>
+nmap <leader>bh :bp<cr>
+" Close a buffer like you would close a tab
+nmap <leader>bq :bp <BAR> bd #<CR>
+ 
+" Stop NERDTree from opening a new buffer every time we open a file
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
+                      \ exe "normal g'\"" | endif  
+
 " pymode settings
 let g:pymode_rope_lookup_project = 0
+let g:pymode_rope = 0
 let Tlist_Use_Right_Window = 1
+
+" Syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Use luacheck for lua files instead of luac
+let g:syntastic_lua_checkers = ['luac', 'luacheck']
+let g:syntastic_lua_luacheck_args = "--globals im Channel Object lib --std=lua52" 
+
+
 
 " Disable cursor keys
 noremap <Up> <NOP>
@@ -121,3 +149,15 @@ noremap <Right> <NOP>
 " TagList options
 let Tlist_WinWidth = 50
 let Tlist_Inc_Winwidth = 0
+
+" vim-airline
+let g:airline_powerline_fonts = 1
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" ctrlp
+let g:ctrlp_cmd = 'CtrlPTag'
+let g:ctrlp_extensions = ['tag', 'undo']

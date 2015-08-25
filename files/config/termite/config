@@ -1,0 +1,38 @@
+[options]
+font = Bitstream Vera Sans Mono 9
+
+[colors]
+foreground = #dddddd
+background = rgba(5, 5, 5, 0.9)
+
+# black
+color0  = #2c2d2e
+color8  = #a3a5a6
+
+# red
+color1  = #ae4747
+color9  = #b24242
+
+# green
+color2  = #9fbc00
+color10 = #9fbc00
+
+# yellow
+color3  = #c7c93d
+color11 = #d0c54d
+
+# blue
+color4  = #204a87
+color12 = #325e80
+
+# magenta
+color5  = #aa8cbf
+color13 = #418bc4
+
+# cyan
+color6  = #9dc7f1
+color14 = #74d2e3
+
+# white
+color7  = #707678
+color15 = #e2e2e2

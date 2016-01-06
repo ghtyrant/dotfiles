@@ -32,15 +32,15 @@
 
 #
 # TMUX
-if which tmux 2>&1 >/dev/null; then
-    # if no session is started, start a new session
-    test -z ${TMUX} && tmux attach
-
-    # when quitting tmux, try to attach
-    #while test -z ${TMUX}; do
-    #    tmux attach || break
-    #done
-fi
+#if which tmux 2>&1 >/dev/null; then
+#    # if no session is started, start a new session
+#    test -z ${TMUX} && tmux attach
+#
+#    # when quitting tmux, try to attach
+#    #while test -z ${TMUX}; do
+#    #    tmux attach || break
+#    #done
+#fi
 
 # zsh-refcard-tag documentation: {{{
 #   You may notice strange looking comments in this file.

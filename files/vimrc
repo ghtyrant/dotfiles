@@ -25,25 +25,38 @@ nnoremap <silent> <leader>bc :bp <BAR> bd #<CR>
 " Required:
 call neobundle#begin(expand('~/.vim/bundle'))
 
+" Give bundles more time to install
+let g:neobundle#install_process_timeout = 1500
+let g:ycm_path_to_python_interpreter = "/usr/bin/python"
+
 " Let NeoBundle manage NeoBundle
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " My Bundles here:
 NeoBundle 'bling/vim-airline'
-NeoBundle 'flazz/vim-colorschemes'
 NeoBundle 'scrooloose/syntastic'
-"NeoBundle 'scrooloose/nerdtree'
-"NeoBundle 'jistr/vim-nerdtree-tabs'
-NeoBundle 'klen/python-mode'
+"NeoBundle 'klen/python-mode'
 NeoBundle 'vim-scripts/taglist.vim'
 NeoBundle 'wting/rust.vim'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tpope/vim-sleuth'
-NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
-NeoBundle 'airblade/vim-gitgutter'
+"NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'tpope/vim-vinegar'
 NeoBundle 'majutsushi/tagbar'
+NeoBundle 'ghtyrant/vim-github-colorscheme'
+NeoBundle 'rdnetto/YCM-Generator'
+NeoBundle 'Valloric/YouCompleteMe', {
+     \ 'build' : { 'unix' : './install.py --clang-completer', }
+     \ }
+
+NeoBundleLazy 'jeaye/color_coded', {
+  \ 'build': {
+    \   'unix': 'cmake . && make && make install',
+  \ },
+  \ 'autoload': { 'filetypes' : ['c', 'cpp', 'objc', 'objcpp'] },
+  \ 'build_commands' : ['cmake', 'make']
+  \}
 
 " Required:
 call neobundle#end()
@@ -138,8 +151,8 @@ let g:netrw_banner = 0
 " Change directory to the current buffer when opening files.
 set autochdir
 
-" Default to tree mode
-let g:netrw_liststyle = 3
+" Default to list mode
+let g:netrw_liststyle = 1
 
 " Hotkeys
 let mapleader = ","

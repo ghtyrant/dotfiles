@@ -208,3 +208,6 @@ setlocal errorformat=%f:%l:\ %m
 map <buffer> <F3> :w<CR>:make<CR>
 
 let g:pymode_rope = 0
+
+" Automatically remove trailing whitespace in C++ files on save
+autocmd BufWritePre *.h,*.hpp,*.cpp :%s/\s\+$//e

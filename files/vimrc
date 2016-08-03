@@ -217,5 +217,5 @@ map <buffer> <F3> :w<CR>:make<CR>
 
 let g:pymode_rope = 0
 
-" Automatically remove trailing whitespace in C++ files on save
-autocmd BufWritePre *.h,*.hpp,*.cpp :%s/\s\+$//e
+" Automatically remove trailing whitespace in C/C++/Python files on save
+autocmd BufWritePre *.py,*.c,*.h,*.hpp,*.cpp :%s/\s\+$//e

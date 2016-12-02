@@ -4394,8 +4394,6 @@ PATH="$NPM_PACKAGES/bin:$PATH"
 unset MANPATH
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
-
-
 ## END OF FILE #################################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
 # Local variables:

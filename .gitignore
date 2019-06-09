@@ -1,0 +1,2 @@
+# Specific i3status-rs needs to be symlinked from configurations
+config/i3/status

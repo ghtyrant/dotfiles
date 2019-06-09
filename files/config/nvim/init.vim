@@ -34,6 +34,7 @@ Plug 'ncm2/ncm2'                          " Autocompletion
 Plug 'ncm2/ncm2-path'                     " Autocompletion for paths
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-pyclang'
 Plug 'roxma/nvim-yarp'
 
 call plug#end()
@@ -214,3 +215,15 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " ncm2
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
+
+" ncm2-pyclang
+let g:ncm2_pyclang#library_path = '/usr/lib/libclang.so.8'
+" a list of relative paths for compile_commands.json
+let g:ncm2_pyclang#database_path = [
+            \ 'compile_commands.json',
+            \ 'build/compile_commands.json',
+            \ '../build/compile_commands.json'
+            \ ]
+
+" Let ale look for compile_commands as well
+let g:ale_c_parse_compile_commands = 1

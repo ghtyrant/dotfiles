@@ -170,6 +170,7 @@ bar {
     font pango:Meslo LG S for Powerline, FontAwesome 9
     position top
     status_command i3status-rs ~/.config/i3/status
+    tray_output primary
     colors {
         separator #666666
         background #222222

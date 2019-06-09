@@ -76,11 +76,6 @@ bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 bindsym $mod+m fullscreen toggle
 
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
 # toggle tiling / floating
 bindsym $mod+f floating toggle
 
@@ -187,3 +182,6 @@ exec "setxkbmap de"
 
 # Set border size
 for_window [class=".*"] border pixel 1
+
+# Rename workspaces
+bindsym $mod+w exec "~/.scripts/i3-rename.sh"

@@ -227,3 +227,6 @@ let g:ncm2_pyclang#database_path = [
 
 " Let ale look for compile_commands as well
 let g:ale_c_parse_compile_commands = 1
+let g:ale_linters = {
+      \ 'cpp': ['ccls', 'clang', 'clangcheck', 'clangd', 'clangtidy', 'clazy', 'cpplint', 'cquery', 'flawfinder', 'gcc']
+      \}

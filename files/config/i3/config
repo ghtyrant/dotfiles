@@ -85,6 +85,8 @@ bindsym $mod+a focus parent
 bindsym ctrl+$alt+Left workspace prev
 bindsym ctrl+$alt+Right workspace next
 
+bindsym ctrl+$alt+l exec "xscreensaver-command -lock"
+
 # focus the child container
 #bindsym $mod+d focus child
 
@@ -167,21 +169,32 @@ bar {
     status_command i3status-rs ~/.config/i3/status
     tray_output primary
     colors {
-        separator #666666
-        background #222222
-        statusline #dddddd
-        focused_workspace #0088CC #0088CC #ffffff
-        active_workspace #333333 #333333 #ffffff
-        inactive_workspace #333333 #333333 #888888
-        urgent_workspace #2f343a #900000 #ffffff
+        background #262626
+        statusline #303030
+        separator  #ff00ff
+
+        focused_workspace  #513015 #513015 #ffffff
+        active_workspace   #404040 #404040 #ffffff
+        inactive_workspace #303030 #303030 #BFBFBF
+        urgent_workspace   #dfaf87 #FF5555 #F8F8F2
+        binding_mode       #FF5555 #FF5555 #F8F8F2
+
     }
 }
 
 # Set up keyboard layout
 exec "setxkbmap de"
 
+# class                 border  bground text    indicator child_border
+client.focused          #262626 #262626 #F8F8F2 #262626   #262626
+client.focused_inactive #262626 #262626 #F8F8F2 #262626   #262626
+client.unfocused        #262626 #262626 #BFBFBF #262626   #262626
+client.urgent           #262626 #262626 #F8F8F2 #262626   #262626
+client.placeholder      #262626 #262626 #F8F8F2 #262626   #262626
+client.background       #F8F8F2
+
 # Set border size
-for_window [class=".*"] border pixel 1
+for_window [class=".*"] border pixel 10
 
 # Rename workspaces
 bindsym $mod+w exec "~/.scripts/i3-rename.sh"
@@ -194,6 +207,10 @@ bindsym XF86AudioRaiseVolume exec "~/.scripts/volume.sh up"
 bindsym XF86AudioLowerVolume exec "~/.scripts/volume.sh down"
 bindsym XF86AudioMute exec "~/.scripts/volume.sh mute"
 
+# Brightness Control
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 10"
+
 # https://github.com/ValveSoftware/steam-for-linux/issues/1040
 for_window [class="^Steam$" title="^Friends List$"] floating enable
 for_window [class="^Steam$" title="Steam - News"] floating enable
@@ -205,3 +222,6 @@ for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
 for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
 for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
 for_window [title="^Steam Keyboard$"] floating enable
+
+exec "xscreensaver"
+exec "seafile-applet"

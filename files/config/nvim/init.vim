@@ -13,7 +13,7 @@ Plug 'airblade/vim-rooter'                " Automagically cd to the nearest git 
 Plug 'posva/vim-vue'                      " Support for .vue files
 Plug 'junegunn/fzf.vim'                   " FuzzyFinder and dependencies
 Plug 'junegunn/fzf', { 'dir': '~/.fzf/', 'do': './install --all' }
-
+"
 Plug 'dahu/vim-asciidoc'                  " AsciiDoc language support and it's dependencies
 Plug 'dahu/vimple'
 Plug 'dahu/Asif'
@@ -23,8 +23,10 @@ Plug 'vim-scripts/SyntaxRange'
 Plug 'ervandew/supertab'                  " Use Tab for completion stuff
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
-
-" RLS integration
+Plug 'lervag/vimtex'
+Plug 'psf/black', { 'tag': '19.10b0' }
+"
+"" RLS integration
 Plug 'autozimu/LanguageClient-neovim', {
   \ 'branch': 'next',
   \ 'do': 'bash install.sh',
@@ -34,7 +36,6 @@ Plug 'ncm2/ncm2'                          " Autocompletion
 Plug 'ncm2/ncm2-path'                     " Autocompletion for paths
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-pyclang'
 Plug 'roxma/nvim-yarp'
 
 call plug#end()
@@ -126,7 +127,7 @@ highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
 " Automatically remove trailing whitespace in C/C++/Python files on save
-autocmd BufWritePre *.py,*.c,*.h,*.hpp,*.cpp :%s/\s\+$//e
+autocmd BufWritePre *.py,*.c,*.h,*.hpp,*.cpp,*.rs :%s/\s\+$//e
 
 if has('nvim')
   set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
@@ -168,6 +169,9 @@ let g:ale_fixers = {
 let g:LanguageClient_settingsPath = expand('~/.config/nvim/settings.json')
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['env', 'rls'],
+    \ 'javascript': ['typescript-language-server', '--stdio'],
+    \ 'typescript': ['typescript-language-server', '--stdio'],
+    \ 'python': ['pyls'],
     \ }
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
@@ -205,6 +209,8 @@ let g:LanguageClient_diagnosticsDisplay = {
     \     },
     \ }
 
+autocmd BufWritePre *.rs,*.py :call LanguageClient#textDocument_formatting_sync()
+
 " vim-airline
 let g:airline_powerline_fonts = 1
 
@@ -216,17 +222,15 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 
-" ncm2-pyclang
-let g:ncm2_pyclang#library_path = '/usr/lib/libclang.so.8'
-" a list of relative paths for compile_commands.json
-let g:ncm2_pyclang#database_path = [
-            \ 'compile_commands.json',
-            \ 'build/compile_commands.json',
-            \ '../build/compile_commands.json'
-            \ ]
+" vimtex
+let g:vimtex_compiler_progname = 'nvr'
+let g:tex_flavor = 'latex'
 
-" Let ale look for compile_commands as well
-let g:ale_c_parse_compile_commands = 1
-let g:ale_linters = {
-      \ 'cpp': ['ccls', 'clang', 'clangcheck', 'clangd', 'clangtidy', 'clazy', 'cpplint', 'cquery', 'flawfinder', 'gcc']
-      \}
+" vim-rooter
+let g:rooter_patterns = ['Makefile', '.git', '.git/']
+
+" ctrlp
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
+" Format with black on save
+autocmd BufWritePre *.py execute ':Black'

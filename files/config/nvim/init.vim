@@ -4,7 +4,6 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 Plug 'tpope/vim-sensible'                 " Set up some sensible defaults
 Plug 'bling/vim-airline'                  " Sexy Powerline
 Plug 'w0rp/ale'                           " Syntax checking
-"Plug 'klen/python-mode'                   " Special Python stuff
 Plug 'ctrlpvim/ctrlp.vim'                 " Fuzzy search
 Plug 'tpope/vim-sleuth'                   " Automagically set tab/shiftwidth by inspecting the current buffer
 Plug 'airblade/vim-gitgutter'             " Display changes to the file based on git
@@ -24,19 +23,10 @@ Plug 'ervandew/supertab'                  " Use Tab for completion stuff
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
 Plug 'lervag/vimtex'
-Plug 'psf/black', { 'tag': '19.10b0' }
-"
-"" RLS integration
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
 
-Plug 'ncm2/ncm2'                          " Autocompletion
-Plug 'ncm2/ncm2-path'                     " Autocompletion for paths
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'roxma/nvim-yarp'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'psf/black', { 'branch': 'stable' }
+Plug 'AlessandroYorba/Despacio'           " Colorscheme
 
 call plug#end()
 
@@ -122,7 +112,7 @@ set undofile
 " Colorscheme
 set t_Co=256
 set background=dark
-color dracula
+color despacio
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
@@ -165,62 +155,12 @@ let g:ale_fixers = {
 \   'rust': ['rustfmt'],
 \ }
 
-" LanguageClient
-let g:LanguageClient_settingsPath = expand('~/.config/nvim/settings.json')
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['env', 'rls'],
-    \ 'javascript': ['typescript-language-server', '--stdio'],
-    \ 'typescript': ['typescript-language-server', '--stdio'],
-    \ 'python': ['pyls'],
-    \ }
-let g:LanguageClient_autoStart = 1
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-" don't make errors so painful to look at
-let g:LanguageClient_diagnosticsDisplay = {
-    \     1: {
-    \         "name": "Error",
-    \         "texthl": "ALEError",
-    \         "signText": "✖",
-    \         "signTexthl": "ErrorMsg",
-    \         "virtualTexthl": "WarningMsg",
-    \     },
-    \     2: {
-    \         "name": "Warning",
-    \         "texthl": "ALEWarning",
-    \         "signText": "⚠",
-    \         "signTexthl": "ALEWarningSign",
-    \         "virtualTexthl": "Todo",
-    \     },
-    \     3: {
-    \         "name": "Information",
-    \         "texthl": "ALEInfo",
-    \         "signText": "ℹ",
-    \         "signTexthl": "ALEInfoSign",
-    \         "virtualTexthl": "Todo",
-    \     },
-    \     4: {
-    \         "name": "Hint",
-    \         "texthl": "ALEInfo",
-    \         "signText": "➤",
-    \         "signTexthl": "ALEInfoSign",
-    \         "virtualTexthl": "Todo",
-    \     },
-    \ }
-
-autocmd BufWritePre *.rs,*.py :call LanguageClient#textDocument_formatting_sync()
-
 " vim-airline
 let g:airline_powerline_fonts = 1
 
 let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
-
-" ncm2
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
 
 " vimtex
 let g:vimtex_compiler_progname = 'nvr'
@@ -231,6 +171,9 @@ let g:rooter_patterns = ['Makefile', '.git', '.git/']
 
 " ctrlp
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
+" Format with rustfmt on save
+let g:rustfmt_autosave = 1
 
 " Format with black on save
 autocmd BufWritePre *.py execute ':Black'

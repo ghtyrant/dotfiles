@@ -71,7 +71,7 @@ xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
 !!! Despacio
 ! special
 *.foreground:   #ffffdf
-*.background:   #303030
+*.background:   #262626
 *.cursorColor:  #dfdfaf
 
 ! black

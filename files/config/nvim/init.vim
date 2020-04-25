@@ -4,7 +4,6 @@ call plug#begin('~/.local/share/nvim/site/plugged')
 Plug 'tpope/vim-sensible'                 " Set up some sensible defaults
 Plug 'bling/vim-airline'                  " Sexy Powerline
 Plug 'w0rp/ale'                           " Syntax checking
-"Plug 'klen/python-mode'                   " Special Python stuff
 Plug 'ctrlpvim/ctrlp.vim'                 " Fuzzy search
 Plug 'tpope/vim-sleuth'                   " Automagically set tab/shiftwidth by inspecting the current buffer
 Plug 'airblade/vim-gitgutter'             " Display changes to the file based on git
@@ -13,29 +12,20 @@ Plug 'airblade/vim-rooter'                " Automagically cd to the nearest git 
 Plug 'posva/vim-vue'                      " Support for .vue files
 Plug 'junegunn/fzf.vim'                   " FuzzyFinder and dependencies
 Plug 'junegunn/fzf', { 'dir': '~/.fzf/', 'do': './install --all' }
-
+"
 Plug 'dahu/vim-asciidoc'                  " AsciiDoc language support and it's dependencies
 Plug 'dahu/vimple'
 Plug 'dahu/Asif'
 Plug 'Raimondi/VimRegStyle'
 Plug 'vim-scripts/SyntaxRange'
 
-Plug 'ervandew/supertab'                  " Use Tab for completion stuff
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
+Plug 'lervag/vimtex'
 
-" RLS integration
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
-
-Plug 'ncm2/ncm2'                          " Autocompletion
-Plug 'ncm2/ncm2-path'                     " Autocompletion for paths
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-pyclang'
-Plug 'roxma/nvim-yarp'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'psf/black', { 'branch': 'stable' }
+Plug 'AlessandroYorba/Despacio'           " Colorscheme
 
 call plug#end()
 
@@ -120,13 +110,12 @@ set undofile
 
 " Colorscheme
 set t_Co=256
-set background=dark
-color dracula
-highlight Normal ctermbg=NONE
-highlight nonText ctermbg=NONE
+let g:despacio_Sunset = 1
+color despacio
+hi MatchParen cterm=none ctermbg=grey ctermfg=blue
 
 " Automatically remove trailing whitespace in C/C++/Python files on save
-autocmd BufWritePre *.py,*.c,*.h,*.hpp,*.cpp :%s/\s\+$//e
+autocmd BufWritePre *.py,*.c,*.h,*.hpp,*.cpp,*.rs :%s/\s\+$//e
 
 if has('nvim')
   set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
@@ -164,47 +153,6 @@ let g:ale_fixers = {
 \   'rust': ['rustfmt'],
 \ }
 
-" LanguageClient
-let g:LanguageClient_settingsPath = expand('~/.config/nvim/settings.json')
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['env', 'rls'],
-    \ }
-let g:LanguageClient_autoStart = 1
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-" don't make errors so painful to look at
-let g:LanguageClient_diagnosticsDisplay = {
-    \     1: {
-    \         "name": "Error",
-    \         "texthl": "ALEError",
-    \         "signText": "✖",
-    \         "signTexthl": "ErrorMsg",
-    \         "virtualTexthl": "WarningMsg",
-    \     },
-    \     2: {
-    \         "name": "Warning",
-    \         "texthl": "ALEWarning",
-    \         "signText": "⚠",
-    \         "signTexthl": "ALEWarningSign",
-    \         "virtualTexthl": "Todo",
-    \     },
-    \     3: {
-    \         "name": "Information",
-    \         "texthl": "ALEInfo",
-    \         "signText": "ℹ",
-    \         "signTexthl": "ALEInfoSign",
-    \         "virtualTexthl": "Todo",
-    \     },
-    \     4: {
-    \         "name": "Hint",
-    \         "texthl": "ALEInfo",
-    \         "signText": "➤",
-    \         "signTexthl": "ALEInfoSign",
-    \         "virtualTexthl": "Todo",
-    \     },
-    \ }
-
 " vim-airline
 let g:airline_powerline_fonts = 1
 
@@ -212,18 +160,146 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-" ncm2
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
+" vimtex
+let g:vimtex_compiler_progname = 'nvr'
+let g:tex_flavor = 'latex'
 
-" ncm2-pyclang
-let g:ncm2_pyclang#library_path = '/usr/lib/libclang.so.8'
-" a list of relative paths for compile_commands.json
-let g:ncm2_pyclang#database_path = [
-            \ 'compile_commands.json',
-            \ 'build/compile_commands.json',
-            \ '../build/compile_commands.json'
-            \ ]
+" vim-rooter
+let g:rooter_patterns = ['Makefile', '.git', '.git/']
 
-" Let ale look for compile_commands as well
-let g:ale_c_parse_compile_commands = 1
+" ctrlp
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
+" Format with rustfmt on save
+let g:rustfmt_autosave = 1
+
+" Format with black on save
+autocmd BufWritePre *.py execute ':Black'
+
+""""""" coc.nvim recommendations
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "<C-n>" :
+      \ <SID>check_back_space() ? "<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "<C-p>" : "<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "<C-y>" : "<C-g>u<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "<C-y>" : "<C-g>u<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Mappings using CoCList:
+" Show all diagnostics.
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>

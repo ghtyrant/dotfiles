@@ -194,7 +194,12 @@ client.placeholder      #262626 #262626 #F8F8F2 #262626   #262626
 client.background       #F8F8F2
 
 # Set border size
-for_window [class=".*"] border pixel 10
+for_window [class=".*"] border pixel 0
+
+# Gaps
+gaps inner 10
+gaps outer 10
+smart_gaps on
 
 # Rename workspaces
 bindsym $mod+w exec "~/.scripts/i3-rename.sh"
@@ -225,3 +230,6 @@ for_window [title="^Steam Keyboard$"] floating enable
 
 exec "xscreensaver"
 exec "seafile-applet"
+
+# Exec system dependent startup commands & applications
+exec_always "~/.config/i3/startup.sh"

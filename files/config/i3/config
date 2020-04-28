@@ -182,9 +182,6 @@ bar {
     }
 }
 
-# Set up keyboard layout
-exec "setxkbmap de"
-
 # class                 border  bground text    indicator child_border
 client.focused          #262626 #262626 #F8F8F2 #262626   #262626
 client.focused_inactive #262626 #262626 #F8F8F2 #262626   #262626

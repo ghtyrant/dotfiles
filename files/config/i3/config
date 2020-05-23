@@ -43,6 +43,9 @@ bindsym $mod+space exec dmenu_run
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
+# Use flameshot to capture screenshots
+bindsym Print exec flameshot gui
+
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down

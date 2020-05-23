@@ -165,7 +165,7 @@ let g:vimtex_compiler_progname = 'nvr'
 let g:tex_flavor = 'latex'
 
 " vim-rooter
-let g:rooter_patterns = ['Makefile', '.git', '.git/']
+let g:rooter_patterns = ['Cargo.toml', 'Makefile', '.git', '.git/']
 
 " ctrlp
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
